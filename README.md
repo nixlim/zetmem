@@ -1,7 +1,7 @@
-## A-MEM MCP Server
+## ZetMem MCP Server
 #### version: alpha
 
---- 
+---
 
 This is an experiment in AI Assisted Software Engineering.
 A human wrote [NONE] of the code directly (not yet, anyway).
@@ -33,8 +33,8 @@ An AI-powered memory system for Claude Code/Claude Desktop that enables persiste
 ### 🚀 One-Command Installation
 
 ```bash
-git clone git@github.com:nixlim/amem_mcp.git
-cd amem_mcp
+git clone git@github.com:nixlim/zetmem.git
+cd zetmem
 ./scripts/install.sh
 ```
 
@@ -44,7 +44,7 @@ See /docs
 
 ### Verification
 
-After installation, verify A-MEM is working:
+After installation, verify ZetMem is working:
 
 ```bash
 # Check services
@@ -107,10 +107,10 @@ go test ./...
 
 ```bash
 # Development build
-go build -o amem-server cmd/server/main.go
+go build -o zetmem-server cmd/server/main.go
 
 # Production build
-CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o amem-server cmd/server/main.go
+CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o zetmem-server cmd/server/main.go
 ```
 
 ## Monitoring
@@ -146,10 +146,10 @@ Access metrics at: `http://localhost:9090/metrics`
 View server logs:
 ```bash
 # Docker deployment
-docker-compose logs amem-server
+docker-compose logs zetmem-server
 
 # Direct execution
-./amem-server -log-level debug
+./zetmem-server -log-level debug
 ```
 
 ## Contributing
@@ -170,7 +170,7 @@ Gemini Pro has 2M tokens of context. Claude - 200K. Claude is hands down better 
 
 Augment Code has the best context management system I worked with so far. But, I wanted to give the agent things like semantic search, evolving memory, persistent context across sessions.
 
-I went to Arxiv, found the A-MEM paper and built an A-MEM MCP Server with AI.
+I went to Arxiv, found the A-MEM paper and built a ZetMem MCP Server with AI.
 
 In 10 hours I delivered a project that would take me, working solo without the AI, about 2-3 weeks of 5 days a week, 8 hours a day.
 

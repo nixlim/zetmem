@@ -85,13 +85,13 @@ func LoadConfig(configPath string) (*Config, error) {
 	config := &Config{
 		// Set defaults
 		Server: ServerConfig{
-			Port:           getEnvInt("AMEM_PORT", 8080),
-			LogLevel:       getEnvString("AMEM_LOG_LEVEL", "info"),
-			MaxRequestSize: getEnvString("AMEM_MAX_REQUEST_SIZE", "10MB"),
+			Port:           getEnvInt("ZETMEM_PORT", 8080),
+			LogLevel:       getEnvString("ZETMEM_LOG_LEVEL", "info"),
+			MaxRequestSize: getEnvString("ZETMEM_MAX_REQUEST_SIZE", "10MB"),
 		},
 		ChromaDB: ChromaDBConfig{
 			URL:        getEnvString("CHROMADB_HOST", "http://localhost:8000"),
-			Collection: getEnvString("CHROMADB_COLLECTION", "amem_memories"),
+			Collection: getEnvString("CHROMADB_COLLECTION", "zetmem_memories"),
 			BatchSize:  getEnvInt("CHROMADB_BATCH_SIZE", 100),
 		},
 		LiteLLM: LiteLLMConfig{
@@ -108,24 +108,24 @@ func LoadConfig(configPath string) (*Config, error) {
 			URL:       getEnvString("EMBEDDING_SERVICE_URL", "http://localhost:8005"),
 		},
 		Evolution: EvolutionConfig{
-			Enabled:     getEnvBool("AMEM_EVOLUTION_ENABLED", true),
-			Schedule:    getEnvString("AMEM_EVOLUTION_SCHEDULE", "0 2 * * *"),
-			BatchSize:   getEnvInt("AMEM_EVOLUTION_BATCH_SIZE", 50),
-			WorkerCount: getEnvInt("AMEM_EVOLUTION_WORKER_COUNT", 3),
+			Enabled:     getEnvBool("ZETMEM_EVOLUTION_ENABLED", true),
+			Schedule:    getEnvString("ZETMEM_EVOLUTION_SCHEDULE", "0 2 * * *"),
+			BatchSize:   getEnvInt("ZETMEM_EVOLUTION_BATCH_SIZE", 50),
+			WorkerCount: getEnvInt("ZETMEM_EVOLUTION_WORKER_COUNT", 3),
 		},
 		Prompts: PromptsConfig{
-			Directory:    getEnvString("AMEM_PROMPTS_PATH", "/app/prompts"),
-			CacheEnabled: getEnvBool("AMEM_PROMPTS_CACHE_ENABLED", true),
-			HotReload:    getEnvBool("AMEM_PROMPTS_HOT_RELOAD", true),
+			Directory:    getEnvString("ZETMEM_PROMPTS_PATH", "/app/prompts"),
+			CacheEnabled: getEnvBool("ZETMEM_PROMPTS_CACHE_ENABLED", true),
+			HotReload:    getEnvBool("ZETMEM_PROMPTS_HOT_RELOAD", true),
 		},
 		Monitoring: MonitoringConfig{
-			MetricsPort:   getEnvInt("AMEM_METRICS_PORT", 9090),
-			EnableTracing: getEnvBool("AMEM_METRICS_ENABLED", true),
-			SampleRate:    getEnvFloat("AMEM_TRACING_SAMPLE_RATE", 0.1),
+			MetricsPort:   getEnvInt("ZETMEM_METRICS_PORT", 9090),
+			EnableTracing: getEnvBool("ZETMEM_METRICS_ENABLED", true),
+			SampleRate:    getEnvFloat("ZETMEM_TRACING_SAMPLE_RATE", 0.1),
 		},
 		Onboarding: OnboardingConfig{
-			StrategyGuidePath: getEnvString("AMEM_STRATEGY_GUIDE_PATH", "ZETMEM_ONBOARDING_STRATEGY.md"),
-			MaxFileSize:       getEnvInt64("AMEM_STRATEGY_GUIDE_MAX_SIZE", 1024*1024), // 1MB default
+			StrategyGuidePath: getEnvString("ZETMEM_STRATEGY_GUIDE_PATH", "ZETMEM_ONBOARDING_STRATEGY.md"),
+			MaxFileSize:       getEnvInt64("ZETMEM_STRATEGY_GUIDE_MAX_SIZE", 1024*1024), // 1MB default
 		},
 	}
 

@@ -6,9 +6,9 @@ import (
 	"sync"
 	"time"
 
-	"github.com/amem/mcp-server/pkg/config"
-	"github.com/amem/mcp-server/pkg/memory"
-	"github.com/amem/mcp-server/pkg/models"
+	"github.com/zetmem/mcp-server/pkg/config"
+	"github.com/zetmem/mcp-server/pkg/memory"
+	"github.com/zetmem/mcp-server/pkg/models"
 	"go.uber.org/zap"
 )
 

@@ -1,16 +1,16 @@
 version: '3.8'
 
 services:
-  amem-server:
+  zetmem-server:
     build: .
     ports:
       - "8080:8080"
       - "9092:9090"  # Metrics port
     environment:
-      - AMEM_ENV=development
+      - ZETMEM_ENV=development
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       - CHROMADB_HOST=http://chromadb:8000
-      - AMEM_LOG_LEVEL=debug
+      - ZETMEM_LOG_LEVEL=debug
     volumes:
       - ./config:/app/config
       - ./prompts:/app/prompts
@@ -19,7 +19,7 @@ services:
       - chromadb
       - redis
     networks:
-      - amem-network
+      - zetmem-network
     restart: unless-stopped
 
   chromadb:
@@ -32,7 +32,7 @@ services:
       - CHROMA_SERVER_HOST=0.0.0.0
       - CHROMA_SERVER_PORT=8000
     networks:
-      - amem-network
+      - zetmem-network
     restart: unless-stopped
 
   redis:
@@ -43,7 +43,7 @@ services:
       - redis_data:/data
     command: redis-server --appendonly yes
     networks:
-      - amem-network
+      - zetmem-network
     restart: unless-stopped
 
   # Optional: RabbitMQ for future evolution worker
@@ -53,12 +53,12 @@ services:
       - "5672:5672"
       - "15672:15672"
     environment:
-      - RABBITMQ_DEFAULT_USER=amem
-      - RABBITMQ_DEFAULT_PASS=amem_password
+      - RABBITMQ_DEFAULT_USER=zetmem
+      - RABBITMQ_DEFAULT_PASS=zetmem_password
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
     networks:
-      - amem-network
+      - zetmem-network
     restart: unless-stopped
 
   # Sentence Transformers embedding service
@@ -74,7 +74,7 @@ services:
     volumes:
       - sentence_transformers_cache:/root/.cache
     networks:
-      - amem-network
+      - zetmem-network
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
@@ -98,7 +98,7 @@ services:
       - '--storage.tsdb.retention.time=200h'
       - '--web.enable-lifecycle'
     networks:
-      - amem-network
+      - zetmem-network
     restart: unless-stopped
 
 volumes:
@@ -109,5 +109,5 @@ volumes:
   sentence_transformers_cache:
 
 networks:
-  amem-network:
+  zetmem-network:
     driver: bridge

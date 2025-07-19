@@ -10,8 +10,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/amem/mcp-server/pkg/config"
-	"github.com/amem/mcp-server/pkg/models"
+	"github.com/zetmem/mcp-server/pkg/config"
+	"github.com/zetmem/mcp-server/pkg/models"
 	"go.uber.org/zap"
 )
 
@@ -101,7 +101,7 @@ func (c *ChromaDBService) Initialize(ctx context.Context) error {
 	collectionData := map[string]interface{}{
 		"name": c.config.Collection,
 		"metadata": map[string]interface{}{
-			"description": "A-MEM memory storage",
+			"description": "ZetMem memory storage",
 		},
 	}
 

@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/amem/mcp-server/pkg/models"
+	"github.com/zetmem/mcp-server/pkg/models"
 	"go.uber.org/zap"
 )
 

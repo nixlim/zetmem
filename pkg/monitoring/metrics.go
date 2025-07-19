@@ -51,14 +51,14 @@ func NewMetrics() *Metrics {
 	metrics := &Metrics{
 		MemoryOperations: prometheus.NewCounterVec(
 			prometheus.CounterOpts{
-				Name: "amem_memory_operations_total",
+				Name: "zetmem_memory_operations_total",
 				Help: "Total number of memory operations",
 			},
 			[]string{"operation", "status"},
 		),
 		MemoryLatency: prometheus.NewHistogramVec(
 			prometheus.HistogramOpts{
-				Name:    "amem_memory_operation_duration_seconds",
+				Name:    "zetmem_memory_operation_duration_seconds",
 				Help:    "Memory operation latency",
 				Buckets: prometheus.DefBuckets,
 			},
@@ -66,14 +66,14 @@ func NewMetrics() *Metrics {
 		),
 		LLMRequests: prometheus.NewCounterVec(
 			prometheus.CounterOpts{
-				Name: "amem_llm_requests_total",
+				Name: "zetmem_llm_requests_total",
 				Help: "Total number of LLM requests",
 			},
 			[]string{"model", "operation", "status"},
 		),
 		LLMLatency: prometheus.NewHistogramVec(
 			prometheus.HistogramOpts{
-				Name:    "amem_llm_request_duration_seconds",
+				Name:    "zetmem_llm_request_duration_seconds",
 				Help:    "LLM request latency",
 				Buckets: prometheus.DefBuckets,
 			},
@@ -81,21 +81,21 @@ func NewMetrics() *Metrics {
 		),
 		LLMTokens: prometheus.NewCounterVec(
 			prometheus.CounterOpts{
-				Name: "amem_llm_tokens_total",
+				Name: "zetmem_llm_tokens_total",
 				Help: "Total number of LLM tokens used",
 			},
 			[]string{"model", "type"}, // type: prompt, completion
 		),
 		VectorSearches: prometheus.NewCounterVec(
 			prometheus.CounterOpts{
-				Name: "amem_vector_searches_total",
+				Name: "zetmem_vector_searches_total",
 				Help: "Total number of vector searches",
 			},
 			[]string{"status"},
 		),
 		VectorLatency: prometheus.NewHistogramVec(
 			prometheus.HistogramOpts{
-				Name:    "amem_vector_search_duration_seconds",
+				Name:    "zetmem_vector_search_duration_seconds",
 				Help:    "Vector search latency",
 				Buckets: prometheus.DefBuckets,
 			},
@@ -103,14 +103,14 @@ func NewMetrics() *Metrics {
 		),
 		EvolutionRuns: prometheus.NewCounterVec(
 			prometheus.CounterOpts{
-				Name: "amem_evolution_runs_total",
+				Name: "zetmem_evolution_runs_total",
 				Help: "Total number of evolution runs",
 			},
 			[]string{"trigger_type", "status"},
 		),
 		EvolutionLatency: prometheus.NewHistogramVec(
 			prometheus.HistogramOpts{
-				Name:    "amem_evolution_duration_seconds",
+				Name:    "zetmem_evolution_duration_seconds",
 				Help:    "Evolution process latency",
 				Buckets: []float64{1, 5, 10, 30, 60, 120, 300}, // Evolution can take longer
 			},
@@ -118,27 +118,27 @@ func NewMetrics() *Metrics {
 		),
 		ActiveConnections: prometheus.NewGauge(
 			prometheus.GaugeOpts{
-				Name: "amem_active_connections",
+				Name: "zetmem_active_connections",
 				Help: "Number of active MCP connections",
 			},
 		),
 		ErrorRate: prometheus.NewCounterVec(
 			prometheus.CounterOpts{
-				Name: "amem_errors_total",
+				Name: "zetmem_errors_total",
 				Help: "Total number of errors",
 			},
 			[]string{"component", "error_type"},
 		),
 		CacheHits: prometheus.NewCounterVec(
 			prometheus.CounterOpts{
-				Name: "amem_cache_hits_total",
+				Name: "zetmem_cache_hits_total",
 				Help: "Total number of cache hits",
 			},
 			[]string{"cache_type"},
 		),
 		CacheMisses: prometheus.NewCounterVec(
 			prometheus.CounterOpts{
-				Name: "amem_cache_misses_total",
+				Name: "zetmem_cache_misses_total",
 				Help: "Total number of cache misses",
 			},
 			[]string{"cache_type"},

@@ -1,12 +1,12 @@
 {
   "mcpServers": {
-    "amem-augmented": {
-      "command": "/path/to/amem-server/amem-server",
-      "args": ["-config", "/path/to/amem-server/config/production.yaml"],
+    "zetmem-augmented": {
+      "command": "/path/to/zetmem-server/zetmem-server",
+      "args": ["-config", "/path/to/zetmem-server/config/production.yaml"],
       "env": {
         "OPENAI_API_KEY": "${OPENAI_API_KEY}",
-        "AMEM_ENV": "production",
-        "AMEM_LOG_LEVEL": "info"
+        "ZETMEM_ENV": "production",
+        "ZETMEM_LOG_LEVEL": "info"
       }
     }
   }

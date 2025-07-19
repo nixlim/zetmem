@@ -8,7 +8,7 @@ import (
 	"io"
 	"os"
 
-	"github.com/amem/mcp-server/pkg/models"
+	"github.com/zetmem/mcp-server/pkg/models"
 	"go.uber.org/zap"
 )
 
@@ -147,7 +147,7 @@ func (s *Server) handleInitialize(request models.MCPRequest) error {
 			"tools": map[string]interface{}{},
 		},
 		"serverInfo": map[string]interface{}{
-			"name":    "A-MEM MCP Server",
+			"name":    "ZetMem MCP Server",
 			"version": "1.0.0",
 		},
 	}

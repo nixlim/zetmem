@@ -2,13 +2,13 @@
 
 ## Overview
 
-This guide provides detailed information about the Docker configuration for the A-MEM MCP Server, including the multi-stage build process, service orchestration, and optimization techniques.
+This guide provides detailed information about the Docker configuration for the ZetMem MCP Server, including the multi-stage build process, service orchestration, and optimization techniques.
 
 ## Docker Architecture
 
 ### Multi-Stage Build Process
 
-The A-MEM server uses a multi-stage Docker build to optimize the final image size:
+The ZetMem server uses a multi-stage Docker build to optimize the final image size:
 
 ```dockerfile
 # Stage 1: Builder
@@ -33,7 +33,7 @@ FROM alpine:latest
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                     Docker Network: amem-network             │
+│                     Docker Network: zetmem-network             │
 ├─────────────────────────────────────────────────────────────┤
 │                                                              │
 │  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────┐ │
@@ -69,7 +69,7 @@ RUN go mod download
 
 # Copy source and build
 COPY . .
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o amem-server ./cmd/server
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o zetmem-server ./cmd/server
 ```
 
 **Key optimizations:**
@@ -92,7 +92,7 @@ RUN addgroup -g 1001 -S amem && \
 WORKDIR /app
 
 # Copy artifacts with proper ownership
-COPY --from=builder /app/amem-server .
+COPY --from=builder /app/zetmem-server .
 COPY --chown=amem:amem config/ ./config/
 COPY --chown=amem:amem prompts/ ./prompts/
 
@@ -103,9 +103,9 @@ EXPOSE 8080
 
 # Health check configuration
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-  CMD pgrep amem-server || exit 1
+  CMD pgrep zetmem-server || exit 1
 
-CMD ["./amem-server", "-config", "./config/docker.yaml"]
+CMD ["./zetmem-server", "-config", "./config/docker.yaml"]
 ```
 
 ## Docker Compose Configuration

@@ -7,9 +7,9 @@ import (
 	"os"
 	"strings"
 
-	"github.com/amem/mcp-server/pkg/config"
-	"github.com/amem/mcp-server/pkg/models"
-	"github.com/amem/mcp-server/pkg/services"
+	"github.com/zetmem/mcp-server/pkg/config"
+	"github.com/zetmem/mcp-server/pkg/models"
+	"github.com/zetmem/mcp-server/pkg/services"
 	"go.uber.org/zap"
 )
 

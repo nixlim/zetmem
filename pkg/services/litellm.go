@@ -10,7 +10,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/amem/mcp-server/pkg/config"
+	"github.com/zetmem/mcp-server/pkg/config"
 	"go.uber.org/zap"
 )
 

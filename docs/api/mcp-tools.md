@@ -2,7 +2,7 @@
 
 ## Overview
 
-The A-MEM MCP server provides seven tools for memory management and workspace organization. All tools follow the MCP (Model Context Protocol) specification and communicate via JSON-RPC 2.0.
+The ZetMem MCP server provides seven tools for memory management and workspace organization. All tools follow the MCP (Model Context Protocol) specification and communicate via JSON-RPC 2.0.
 
 ## Available Tools
 

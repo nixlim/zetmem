@@ -2,7 +2,7 @@
 
 ## Overview
 
-This guide explains how to integrate and extend the A-MEM service layer for custom implementations and advanced use cases.
+This guide explains how to integrate and extend the ZetMem service layer for custom implementations and advanced use cases.
 
 ## Service Initialization Order
 
@@ -38,7 +38,7 @@ func LoadConfig() (*Config, error) {
     cfg := &Config{
         ChromaDB: ChromaDBConfig{
             URL:        getEnv("CHROMADB_URL", "http://localhost:8000"),
-            Collection: getEnv("CHROMADB_COLLECTION", "amem_memories"),
+            Collection: getEnv("CHROMADB_COLLECTION", "zetmem_memories"),
         },
         Embedding: EmbeddingConfig{
             Service: getEnv("EMBEDDING_SERVICE", "sentence-transformers"),
@@ -63,7 +63,7 @@ func LoadConfig() (*Config, error) {
 services:
   chromadb:
     url: "http://localhost:8000"
-    collection: "amem_memories"
+    collection: "zetmem_memories"
   
   embedding:
     service: "sentence-transformers"

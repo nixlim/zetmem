@@ -2,7 +2,7 @@
 
 ## Overview
 
-The A-MEM service layer provides a modular, extensible architecture for AI-powered memory management. Each service is designed with a single responsibility and clear interfaces for integration.
+The ZetMem service layer provides a modular, extensible architecture for AI-powered memory management. Each service is designed with a single responsibility and clear interfaces for integration.
 
 ## Core Services
 
@@ -223,7 +223,7 @@ EMBEDDING_SERVICE=sentence-transformers
 
 # ChromaDB
 CHROMADB_URL=http://localhost:8000
-CHROMADB_COLLECTION=amem_memories
+CHROMADB_COLLECTION=zetmem_memories
 ```
 
 ### Service Dependencies

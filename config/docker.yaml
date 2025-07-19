@@ -5,7 +5,7 @@ server:
 
 chromadb:
   url: "http://chromadb:8000"
-  collection: "amem_memories"
+  collection: "zetmem_memories"
   batch_size: 100
 
 litellm:

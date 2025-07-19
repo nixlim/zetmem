@@ -1,4 +1,4 @@
-module github.com/amem/mcp-server
+module github.com/zetmem/mcp-server
 
 go 1.23
 

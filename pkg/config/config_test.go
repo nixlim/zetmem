@@ -22,8 +22,8 @@ func TestLoadConfigDefaults(t *testing.T) {
 		t.Errorf("Expected default log level 'info', got %s", cfg.Server.LogLevel)
 	}
 
-	if cfg.ChromaDB.Collection != "amem_memories" {
-		t.Errorf("Expected default collection 'amem_memories', got %s", cfg.ChromaDB.Collection)
+	if cfg.ChromaDB.Collection != "zetmem_memories" {
+		t.Errorf("Expected default collection 'zetmem_memories', got %s", cfg.ChromaDB.Collection)
 	}
 
 	if cfg.LiteLLM.DefaultModel != "gpt-4-turbo" {

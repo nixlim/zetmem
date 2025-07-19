@@ -8,12 +8,12 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/amem/mcp-server/pkg/config"
-	"github.com/amem/mcp-server/pkg/mcp"
-	"github.com/amem/mcp-server/pkg/memory"
-	"github.com/amem/mcp-server/pkg/monitoring"
-	"github.com/amem/mcp-server/pkg/scheduler"
-	"github.com/amem/mcp-server/pkg/services"
+	"github.com/zetmem/mcp-server/pkg/config"
+	"github.com/zetmem/mcp-server/pkg/mcp"
+	"github.com/zetmem/mcp-server/pkg/memory"
+	"github.com/zetmem/mcp-server/pkg/monitoring"
+	"github.com/zetmem/mcp-server/pkg/scheduler"
+	"github.com/zetmem/mcp-server/pkg/services"
 	"github.com/joho/godotenv"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
@@ -44,7 +44,7 @@ func main() {
 	}
 	defer logger.Sync()
 
-	logger.Info("Starting A-MEM MCP Server",
+	logger.Info("Starting ZetMem MCP Server",
 		zap.String("version", "1.0.0"),
 		zap.String("config_path", *configPath))
 
@@ -153,7 +153,7 @@ func main() {
 		logger.Fatal("MCP server failed", zap.Error(err))
 	}
 
-	logger.Info("A-MEM MCP Server shutdown complete")
+	logger.Info("ZetMem MCP Server shutdown complete")
 }
 
 // initLogger initializes the logger with the specified level

@@ -1,8 +1,8 @@
-# A-MEM MCP Server Documentation
+# ZetMem MCP Server Documentation
 
 ## 📚 Overview
 
-A-MEM (Adaptive Memory) is an intelligent memory management system that provides AI-powered code memory storage, retrieval, and evolution capabilities through the Model Context Protocol (MCP).
+ZetMem (Adaptive Memory) is an intelligent memory management system that provides AI-powered code memory storage, retrieval, and evolution capabilities through the Model Context Protocol (MCP).
 
 ## 🏗️ Architecture
 
@@ -108,7 +108,7 @@ Use your browser's search (Ctrl+F / Cmd+F) or grep through the markdown files to
 
 Documentation Version: 2.0.0  
 Generated: 2025-07-18  
-A-MEM Version: Latest
+ZetMem Version: Latest
 
 ---
 

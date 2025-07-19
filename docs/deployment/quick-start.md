@@ -1,6 +1,6 @@
 # Quick Start Guide
 
-Get the A-MEM MCP Server running in under 5 minutes with this quick start guide.
+Get the ZetMem MCP Server running in under 5 minutes with this quick start guide.
 
 ## Prerequisites
 
@@ -13,8 +13,8 @@ Ensure you have the following installed:
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-org/amem-mcp-server.git
-cd amem-mcp-server
+git clone https://github.com/your-org/zetmem-mcp-server.git
+cd zetmem-mcp-server
 
 # Copy environment template
 cp .env.example .env
@@ -60,11 +60,11 @@ curl http://localhost:8080/health
 
 ## 🎉 You're Ready!
 
-The A-MEM MCP Server is now running with:
+The ZetMem MCP Server is now running with:
 - **API Server**: http://localhost:8080
 - **ChromaDB UI**: http://localhost:8004
 - **Prometheus Metrics**: http://localhost:9091
-- **RabbitMQ Management**: http://localhost:15672 (user: amem, pass: amem_password)
+- **RabbitMQ Management**: http://localhost:15672 (user: zetmem, pass: zetmem_password)
 
 ## Quick Test
 
@@ -110,7 +110,7 @@ docker compose down
 docker compose logs -f [service-name]
 
 # Restart a service
-docker compose restart amem-server
+docker compose restart zetmem-server
 
 # Update and restart
 docker compose pull && docker compose up -d
@@ -132,20 +132,20 @@ AMEM_PORT=8081 docker compose up -d
 
 ```bash
 # Verify environment variable
-docker compose exec amem-server env | grep OPENAI
+docker compose exec zetmem-server env | grep OPENAI
 
 # Restart after changing .env
-docker compose restart amem-server
+docker compose restart zetmem-server
 ```
 
 ### Service Won't Start
 
 ```bash
 # Check logs for specific service
-docker compose logs amem-server
+docker compose logs zetmem-server
 
 # Run in foreground to see errors
-docker compose up amem-server
+docker compose up zetmem-server
 ```
 
 ## Quick Configuration Changes
@@ -159,7 +159,7 @@ AMEM_LOG_LEVEL=debug
 
 Then restart:
 ```bash
-docker compose restart amem-server
+docker compose restart zetmem-server
 ```
 
 ### Change Memory Model
@@ -245,10 +245,10 @@ If that doesn't work:
 ## Getting Help
 
 - **Logs**: `docker compose logs [service-name]`
-- **Shell Access**: `docker compose exec amem-server sh`
+- **Shell Access**: `docker compose exec zetmem-server sh`
 - **Documentation**: See `/docs` directory
 - **Issues**: GitHub Issues page
 
 ---
 
-**Congratulations!** You now have a fully functional A-MEM MCP Server running locally. The system is ready to store and retrieve memories for your AI agents.
+**Congratulations!** You now have a fully functional ZetMem MCP Server running locally. The system is ready to store and retrieve memories for your AI agents.

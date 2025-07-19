@@ -11,9 +11,9 @@ scrape_configs:
     static_configs:
       - targets: ['localhost:9090']
 
-  - job_name: 'amem-server'
+  - job_name: 'zetmem-server'
     static_configs:
-      - targets: ['amem-server:9090']
+      - targets: ['zetmem-server:9090']
     metrics_path: '/metrics'
     scrape_interval: 10s
     scrape_timeout: 5s

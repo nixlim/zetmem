@@ -3,7 +3,7 @@
 .PHONY: help build run test clean docker-build docker-run docker-stop setup dev deps lint fmt vet
 
 # Variables
-BINARY_NAME=amem-server
+BINARY_NAME=zetmem-server
 DOCKER_IMAGE=amem/mcp-server
 VERSION?=1.0.0
 CONFIG_FILE?=config/development.yaml

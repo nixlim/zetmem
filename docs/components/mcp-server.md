@@ -2,7 +2,7 @@
 
 ## Overview
 
-The MCP (Model Context Protocol) server in A-MEM is a JSON-RPC 2.0 compliant server that exposes memory management functionality through standardized tools. It serves as the primary interface for AI models to interact with the Adaptive Memory System.
+The MCP (Model Context Protocol) server in ZetMem is a JSON-RPC 2.0 compliant server that exposes memory management functionality through standardized tools. It serves as the primary interface for AI models to interact with the Adaptive Memory System.
 
 ## Architecture
 

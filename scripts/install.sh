@@ -191,7 +191,7 @@ setup_environment() {
     echo "🔑 API Key Configuration"
     echo "========================"
     echo ""
-    echo "A-MEM works best with an OpenAI API key for enhanced embeddings and analysis."
+    echo "ZetMem works best with an OpenAI API key for enhanced embeddings and analysis."
     echo "You can also use it without an API key (with reduced functionality)."
     echo ""
     
@@ -420,8 +420,8 @@ build_server() {
         chmod +x amem-server
         
         # Get absolute path
-        AMEM_SERVER_PATH="$(pwd)/amem-server"
-        AMEM_CONFIG_PATH="$(pwd)/config/production.yaml"
+        ZETMEM_SERVER_PATH="$(pwd)/zetmem-server"
+        ZETMEM_CONFIG_PATH="$(pwd)/config/production.yaml"
     else
         print_error "Failed to build A-MEM server"
         exit 1
@@ -470,10 +470,10 @@ configure_claude_code() {
         api_key=$(grep "OPENAI_API_KEY=" .env | cut -d'=' -f2- | sed 's/^"//' | sed 's/"$//')
     fi
 
-    # Read current config and add A-MEM MCP server (preserve existing servers)
-    cat "$config_file" | jq --arg server_path "$AMEM_SERVER_PATH" --arg config_path "$AMEM_CONFIG_PATH" --arg api_key "$api_key" '
+    # Read current config and add ZetMem MCP server (preserve existing servers)
+    cat "$config_file" | jq --arg server_path "$ZETMEM_SERVER_PATH" --arg config_path "$ZETMEM_CONFIG_PATH" --arg api_key "$api_key" '
         .["claude.mcpServers"] = (.["claude.mcpServers"] // {}) + {
-            "amem-augmented": {
+            "zetmem-augmented": {
                 "command": $server_path,
                 "args": ["-config", $config_path],
                 "env": {
@@ -512,10 +512,10 @@ configure_claude_desktop() {
         api_key=$(grep "OPENAI_API_KEY=" .env | cut -d'=' -f2- | sed 's/^"//' | sed 's/"$//')
     fi
 
-    # Read current config and add A-MEM MCP server (preserve existing servers)
-    cat "$config_file" | jq --arg server_path "$AMEM_SERVER_PATH" --arg config_path "$AMEM_CONFIG_PATH" --arg api_key "$api_key" '
+    # Read current config and add ZetMem MCP server (preserve existing servers)
+    cat "$config_file" | jq --arg server_path "$ZETMEM_SERVER_PATH" --arg config_path "$ZETMEM_CONFIG_PATH" --arg api_key "$api_key" '
         .mcpServers = (.mcpServers // {}) + {
-            "amem-augmented": {
+            "zetmem-augmented": {
                 "command": $server_path,
                 "args": ["-config", $config_path],
                 "env": {
@@ -635,8 +635,8 @@ main() {
     echo "   'Can you store this code snippet in memory?'"
     echo ""
     echo "Configuration files:"
-    echo "- A-MEM Server: $AMEM_SERVER_PATH"
-    echo "- Configuration: $AMEM_CONFIG_PATH"
+    echo "- ZetMem Server: $ZETMEM_SERVER_PATH"
+    echo "- Configuration: $ZETMEM_CONFIG_PATH"
     echo "- Environment: $PROJECT_ROOT/.env"
     
     if [ ${#claude_installations[@]} -gt 0 ]; then

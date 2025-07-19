@@ -1,8 +1,8 @@
-# A-MEM MCP Server - Project Structure Analysis
+# ZetMem MCP Server - Project Structure Analysis
 
 ## Overview
 
-The A-MEM (Adaptive Memory) MCP Server is a sophisticated Go-based Model Context Protocol (MCP) server designed to provide advanced memory management capabilities for AI assistants. The project implements a scalable, event-driven architecture with comprehensive monitoring, embedding services, and memory evolution features.
+The ZetMem (Adaptive Memory) MCP Server is a sophisticated Go-based Model Context Protocol (MCP) server designed to provide advanced memory management capabilities for AI assistants. The project implements a scalable, event-driven architecture with comprehensive monitoring, embedding services, and memory evolution features.
 
 ## Technology Stack
 
@@ -24,7 +24,7 @@ The A-MEM (Adaptive Memory) MCP Server is a sophisticated Go-based Model Context
 ## Directory Structure
 
 ```
-amem_mcp_no_docs/
+zetmem/
 ├── cmd/                          # Application entry points
 │   └── server/
 │       └── main.go              # Main server executable
@@ -197,7 +197,7 @@ The system uses a layered configuration approach:
 
 The project uses Docker Compose to orchestrate multiple services:
 
-1. **amem-server** - Main MCP server
+1. **zetmem-server** - Main MCP server
 2. **chromadb** - Vector database
 3. **redis** - Caching layer
 4. **rabbitmq** - Message queue (optional)
@@ -255,4 +255,4 @@ The Makefile provides comprehensive build automation:
 
 ## Summary
 
-The A-MEM MCP Server represents a well-architected, production-ready system for adaptive memory management in AI applications. Its modular design, comprehensive monitoring, and scalable architecture make it suitable for both development and production deployments. The integration with Claude Flow and adherence to MCP standards ensures compatibility with the broader AI assistant ecosystem.
+The ZetMem MCP Server represents a well-architected, production-ready system for adaptive memory management in AI applications. Its modular design, comprehensive monitoring, and scalable architecture make it suitable for both development and production deployments. The integration with Claude Flow and adherence to MCP standards ensures compatibility with the broader AI assistant ecosystem.

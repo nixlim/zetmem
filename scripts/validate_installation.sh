@@ -257,7 +257,7 @@ validate_claude_config() {
         print_status "Claude Code configuration file exists"
         
         # Check if A-MEM is configured
-        if grep -q "amem-augmented" "$CLAUDE_CODE_CONFIG" 2>/dev/null; then
+        if grep -q "zetmem-augmented" "$CLAUDE_CODE_CONFIG" 2>/dev/null; then
             print_status "A-MEM is configured in Claude Code"
             claude_found=true
         else
@@ -279,7 +279,7 @@ validate_claude_config() {
         print_status "Claude Desktop configuration file exists"
         
         # Check if A-MEM is configured
-        if grep -q "amem-augmented" "$CLAUDE_DESKTOP_CONFIG" 2>/dev/null; then
+        if grep -q "zetmem-augmented" "$CLAUDE_DESKTOP_CONFIG" 2>/dev/null; then
             print_status "A-MEM is configured in Claude Desktop"
             claude_found=true
         else

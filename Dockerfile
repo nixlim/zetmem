@@ -17,7 +17,7 @@ RUN go mod download
 COPY . .
 
 # Build the application
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o amem-server ./cmd/server
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o zetmem-server ./cmd/server
 
 # Final stage
 FROM alpine:latest
@@ -26,31 +26,31 @@ FROM alpine:latest
 RUN apk --no-cache add ca-certificates tzdata
 
 # Create non-root user
-RUN addgroup -g 1001 -S amem && \
-    adduser -u 1001 -S amem -G amem
+RUN addgroup -g 1001 -S zetmem && \
+    adduser -u 1001 -S zetmem -G zetmem
 
 # Set working directory
 WORKDIR /app
 
 # Copy binary from builder
-COPY --from=builder /app/amem-server .
+COPY --from=builder /app/zetmem-server .
 
 # Copy configuration and prompts
-COPY --chown=amem:amem config/ ./config/
-COPY --chown=amem:amem prompts/ ./prompts/
+COPY --chown=zetmem:zetmem config/ ./config/
+COPY --chown=zetmem:zetmem prompts/ ./prompts/
 
 # Create data directory
-RUN mkdir -p /app/data && chown amem:amem /app/data
+RUN mkdir -p /app/data && chown zetmem:zetmem /app/data
 
 # Switch to non-root user
-USER amem
+USER zetmem
 
 # Expose port
 EXPOSE 8080
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-  CMD pgrep amem-server || exit 1
+  CMD pgrep zetmem-server || exit 1
 
 # Run the application
-CMD ["./amem-server", "-config", "./config/docker.yaml"]
+CMD ["./zetmem-server", "-config", "./config/docker.yaml"]

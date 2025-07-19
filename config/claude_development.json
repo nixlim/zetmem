@@ -1,18 +1,18 @@
 {
   "mcpServers": {
-    "amem-augmented": {
-      "command": "/path/to/amem-server/amem-server",
-      "args": ["-config", "/path/to/amem-server/config/development.yaml"],
+    "zetmem-augmented": {
+      "command": "/path/to/zetmem-server/zetmem-server",
+      "args": ["-config", "/path/to/zetmem-server/config/development.yaml"],
       "env": {
         "OPENAI_API_KEY": "${OPENAI_API_KEY}",
-        "AMEM_ENV": "development",
-        "AMEM_LOG_LEVEL": "debug",
+        "ZETMEM_ENV": "development",
+        "ZETMEM_LOG_LEVEL": "debug",
         "CHROMADB_HOST": "http://localhost:8002",
         "EMBEDDING_SERVICE_URL": "http://localhost:8003"
       }
     }
   },
-  "_comment": "Development configuration for A-MEM MCP Server",
+  "_comment": "Development configuration for ZetMem MCP Server",
   "_features": {
     "debug_logging": true,
     "hot_reload": true,

@@ -62,16 +62,16 @@ if [ -f "$BACKUP_CONFIG" ]; then
         echo
         
         if [[ $REPLY =~ ^[Yy]$ ]]; then
-            AMEM_SERVER_PATH="$PROJECT_ROOT/amem-server"
-            AMEM_CONFIG_PATH="$PROJECT_ROOT/config/production.yaml"
+            ZETMEM_SERVER_PATH="$PROJECT_ROOT/zetmem-server"
+            ZETMEM_CONFIG_PATH="$PROJECT_ROOT/config/production.yaml"
             
             # Create temporary config
             temp_config=$(mktemp)
             
-            # Add A-MEM to existing config
-            cat "$CLAUDE_DESKTOP_CONFIG" | jq --arg server_path "$AMEM_SERVER_PATH" --arg config_path "$AMEM_CONFIG_PATH" '
+            # Add ZetMem to existing config
+            cat "$CLAUDE_DESKTOP_CONFIG" | jq --arg server_path "$ZETMEM_SERVER_PATH" --arg config_path "$ZETMEM_CONFIG_PATH" '
                 .mcpServers = (.mcpServers // {}) + {
-                    "amem-augmented": {
+                    "zetmem-augmented": {
                         "command": $server_path,
                         "args": ["-config", $config_path],
                         "env": {
@@ -107,8 +107,8 @@ else
             print_info "Created backup at: ${CLAUDE_DESKTOP_CONFIG}.pre-amem-backup"
         fi
         
-        AMEM_SERVER_PATH="$PROJECT_ROOT/amem-server"
-        AMEM_CONFIG_PATH="$PROJECT_ROOT/config/production.yaml"
+        ZETMEM_SERVER_PATH="$PROJECT_ROOT/zetmem-server"
+        ZETMEM_CONFIG_PATH="$PROJECT_ROOT/config/production.yaml"
         
         # Create config directory if it doesn't exist
         mkdir -p "$(dirname "$CLAUDE_DESKTOP_CONFIG")"
@@ -122,9 +122,9 @@ else
         temp_config=$(mktemp)
         
         # Add A-MEM to existing config (preserve existing servers)
-        cat "$CLAUDE_DESKTOP_CONFIG" | jq --arg server_path "$AMEM_SERVER_PATH" --arg config_path "$AMEM_CONFIG_PATH" '
+        cat "$CLAUDE_DESKTOP_CONFIG" | jq --arg server_path "$ZETMEM_SERVER_PATH" --arg config_path "$ZETMEM_CONFIG_PATH" '
             .mcpServers = (.mcpServers // {}) + {
-                "amem-augmented": {
+                "zetmem-augmented": {
                     "command": $server_path,
                     "args": ["-config", $config_path],
                     "env": {
