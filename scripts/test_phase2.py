@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Comprehensive test script for A-MEM MCP Server Phase 2 features
+Comprehensive test script for ZetMem MCP Server Phase 2 features
 Tests advanced capabilities including evolution, monitoring, and enhanced embeddings
 """
 
@@ -16,7 +16,7 @@ def send_mcp_request(request: Dict[str, Any]) -> Dict[str, Any]:
     try:
         # Start the server process
         process = subprocess.Popen(
-            ['./amem-server', '-config', 'config/development.yaml'],
+            ['./zetmem-server', '-config', 'config/development.yaml'],
             stdin=subprocess.PIPE,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
@@ -188,7 +188,7 @@ def test_metrics_endpoint():
     try:
         # Start server in background for metrics test
         process = subprocess.Popen(
-            ['./amem-server', '-config', 'config/development.yaml'],
+            ['./zetmem-server', '-config', 'config/development.yaml'],
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE
         )
@@ -205,9 +205,9 @@ def test_metrics_endpoint():
             
             # Check for expected metrics
             expected_metrics = [
-                'amem_memory_operations_total',
-                'amem_llm_requests_total',
-                'amem_vector_searches_total'
+                'zetmem_memory_operations_total',
+                'zetmem_llm_requests_total',
+                'zetmem_vector_searches_total'
             ]
             
             found_metrics = sum(1 for metric in expected_metrics if metric in metrics_content)
@@ -240,7 +240,7 @@ def test_health_endpoint():
     try:
         # Start server in background
         process = subprocess.Popen(
-            ['./amem-server', '-config', 'config/development.yaml'],
+            ['./zetmem-server', '-config', 'config/development.yaml'],
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE
         )
@@ -292,7 +292,7 @@ def test_docker_services():
             # Check for expected services
             config_output = result.stdout
             expected_services = [
-                'amem-server',
+                'zetmem-server',
                 'chromadb',
                 'sentence-transformers',
                 'redis',
@@ -320,16 +320,16 @@ def test_docker_services():
 
 def main():
     """Run all Phase 2 tests"""
-    print("🚀 A-MEM MCP Server Phase 2 Test Suite")
+    print("🚀 ZetMem MCP Server Phase 2 Test Suite")
     print("=" * 50)
     print("")
 
     # Check if server binary exists
     try:
-        subprocess.run(['./amem-server', '--help'], 
+        subprocess.run(['./zetmem-server', '--help'],
                       capture_output=True, check=False)
     except FileNotFoundError:
-        print("Error: amem-server binary not found. Please run 'make build' first.")
+        print("Error: zetmem-server binary not found. Please run 'make build' first.")
         sys.exit(1)
 
     tests = [

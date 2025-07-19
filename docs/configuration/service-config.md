@@ -10,7 +10,7 @@ OPENAI_API_KEY=sk-your-api-key-here
 
 # ChromaDB Configuration
 CHROMADB_URL=http://localhost:8000
-CHROMADB_COLLECTION=amem_memories
+CHROMADB_COLLECTION=zetmem_memories
 ```
 
 ### Optional Variables
@@ -47,7 +47,7 @@ services:
   # ChromaDB Vector Database
   chromadb:
     url: "${CHROMADB_URL:-http://localhost:8000}"
-    collection: "${CHROMADB_COLLECTION:-amem_memories}"
+    collection: "${CHROMADB_COLLECTION:-zetmem_memories}"
     timeout: 30s
     max_retries: 3
   
@@ -222,8 +222,8 @@ services:
       timeout: 10s
       retries: 3
 
-  # A-MEM Server
-  amem:
+  # ZetMem Server
+  zetmem:
     build:
       context: .
       dockerfile: Dockerfile
@@ -233,7 +233,7 @@ services:
     environment:
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       - CHROMADB_URL=http://chromadb:8000
-      - CHROMADB_COLLECTION=amem_memories
+      - CHROMADB_COLLECTION=zetmem_memories
       - EMBEDDING_SERVICE=sentence-transformers
       - EMBEDDING_SERVICE_URL=http://sentence-transformers:8080
       - LOG_LEVEL=info
@@ -392,14 +392,14 @@ TRACE_ENDPOINT=http://jaeger:14268/api/traces
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: amem-config
-  namespace: amem
+  name: zetmem-config
+  namespace: zetmem
 data:
   config.yaml: |
     services:
       chromadb:
         url: "http://chromadb-service:8000"
-        collection: "amem_memories_prod"
+        collection: "zetmem_memories_prod"
       embedding:
         service: "sentence-transformers"
         url: "http://embedding-service:8080"
@@ -419,9 +419,9 @@ global:
   scrape_interval: 15s
 
 scrape_configs:
-  - job_name: 'amem'
+  - job_name: 'zetmem'
     static_configs:
-      - targets: ['amem:9091']
+      - targets: ['zetmem:9091']
     metrics_path: '/metrics'
 ```
 
@@ -430,7 +430,7 @@ scrape_configs:
 ```json
 {
   "dashboard": {
-    "title": "A-MEM Service Metrics",
+    "title": "ZetMem Service Metrics",
     "panels": [
       {
         "title": "LLM Call Duration",
@@ -484,8 +484,8 @@ secrets:
 ```yaml
 tls:
   enabled: true
-  cert_file: /etc/ssl/certs/amem.crt
-  key_file: /etc/ssl/private/amem.key
+  cert_file: /etc/ssl/certs/zetmem.crt
+  key_file: /etc/ssl/private/zetmem.key
   ca_file: /etc/ssl/certs/ca-bundle.crt
   min_version: "1.2"
   cipher_suites:

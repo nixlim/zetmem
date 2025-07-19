@@ -6,9 +6,9 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/google/uuid"
 	"github.com/zetmem/mcp-server/pkg/models"
 	"github.com/zetmem/mcp-server/pkg/services"
-	"github.com/google/uuid"
 	"go.uber.org/zap"
 )
 
@@ -139,7 +139,7 @@ func (s *System) RetrieveMemories(ctx context.Context, req models.RetrieveMemory
 		req.MaxResults = 5
 	}
 	if req.MinRelevance <= 0 {
-		req.MinRelevance = 0.7
+		req.MinRelevance = 0.3
 	}
 
 	// Step 1: Generate query embedding

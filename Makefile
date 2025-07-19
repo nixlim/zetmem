@@ -1,22 +1,22 @@
-# A-MEM MCP Server Makefile
+# ZetMem MCP Server Makefile
 
 .PHONY: help build run test clean docker-build docker-run docker-stop setup dev deps lint fmt vet
 
 # Variables
 BINARY_NAME=zetmem-server
-DOCKER_IMAGE=amem/mcp-server
+DOCKER_IMAGE=zetmem/mcp-server
 VERSION?=1.0.0
 CONFIG_FILE?=config/development.yaml
 
 # Default target
 help: ## Show this help message
-	@echo "A-MEM MCP Server - Available commands:"
+	@echo "ZetMem MCP Server - Available commands:"
 	@echo ""
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
 
 # Development
 setup: ## Initial project setup
-	@echo "Setting up A-MEM MCP Server development environment..."
+	@echo "Setting up ZetMem MCP Server development environment..."
 	@cp .env.example .env
 	@echo "✅ Created .env file (please update with your API keys)"
 	@go mod tidy
@@ -39,7 +39,7 @@ build: deps ## Build the server binary
 	@echo "✅ Built $(BINARY_NAME)"
 
 run: build ## Run the server locally
-	@echo "Starting A-MEM MCP Server..."
+	@echo "Starting ZetMem MCP Server..."
 	@./$(BINARY_NAME) -config $(CONFIG_FILE)
 
 dev: ## Start development environment with Docker Compose
@@ -80,7 +80,7 @@ docker-build: ## Build Docker image
 	@echo "✅ Built Docker image"
 
 docker-run: ## Run with Docker Compose
-	@echo "Starting A-MEM MCP Server with Docker Compose..."
+	@echo "Starting ZetMem MCP Server with Docker Compose..."
 	@docker-compose up -d
 	@echo "✅ Services started"
 	@echo "Server: http://localhost:8080"
@@ -93,7 +93,7 @@ docker-stop: ## Stop Docker Compose services
 	@echo "✅ Services stopped"
 
 docker-logs: ## View Docker logs
-	@docker-compose logs -f amem-server
+	@docker-compose logs -f zetmem-server
 
 # Utilities
 clean: ## Clean build artifacts
@@ -110,7 +110,7 @@ reset-data: ## Reset all data (ChromaDB, Redis)
 	@echo "✅ Data reset"
 
 logs: ## View server logs (when running with docker-compose)
-	@docker-compose logs -f amem-server
+	@docker-compose logs -f zetmem-server
 
 status: ## Check service status
 	@echo "Service Status:"
@@ -146,7 +146,7 @@ health: ## Check service health
 
 evolution: ## Trigger manual memory evolution
 	@echo "Triggering memory evolution..."
-	@python3 -c "import json; print(json.dumps({'jsonrpc': '2.0', 'id': 1, 'method': 'tools/call', 'params': {'name': 'evolve_memory_network', 'arguments': {'trigger_type': 'manual', 'scope': 'recent'}}}))" | ./amem-server -config config/development.yaml
+	@python3 -c "import json; print(json.dumps({'jsonrpc': '2.0', 'id': 1, 'method': 'tools/call', 'params': {'name': 'evolve_memory_network', 'arguments': {'trigger_type': 'manual', 'scope': 'recent'}}}))" | ./zetmem-server -config config/development.yaml
 
 # Quick commands
 up: docker-run ## Alias for docker-run

@@ -1,8 +1,8 @@
-# A-MEM MCP Server Deployment Guide
+# ZetMem MCP Server Deployment Guide
 
 ## Overview
 
-The A-MEM MCP Server is deployed as a containerized microservices architecture using Docker and Docker Compose. This guide provides comprehensive instructions for deploying the system in various environments.
+The ZetMem MCP Server is deployed as a containerized microservices architecture using Docker and Docker Compose. This guide provides comprehensive instructions for deploying the system in various environments.
 
 ## Architecture Overview
 
@@ -15,7 +15,7 @@ The deployment consists of the following components:
 └─────────────────────────────────────────────────────────────┘
                                 │
 ┌─────────────────────────────────────────────────────────────┐
-│                      A-MEM Server                            │
+│                     ZetMem Server                            │
 │                  (Go Application)                            │
 │              ┌─────────────────────┐                        │
 │              │   HTTP API (8080)   │                        │
@@ -69,8 +69,8 @@ The deployment consists of the following components:
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-org/amem-mcp-server.git
-cd amem-mcp-server
+git clone https://github.com/your-org/zetmem-mcp-server.git
+cd zetmem-mcp-server
 ```
 
 ### 2. Configure Environment

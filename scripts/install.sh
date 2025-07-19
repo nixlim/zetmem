@@ -1,6 +1,6 @@
 #!/bin/bash
-# A-MEM MCP Server Automated Installation Script
-# This script sets up A-MEM for integration with Claude Code or Claude Desktop
+# ZetMem MCP Server Automated Installation Script
+# This script sets up ZetMem for integration with Claude Code or Claude Desktop
 
 set -e
 
@@ -219,18 +219,18 @@ setup_environment() {
 
 # Cleanup existing containers and processes
 cleanup_existing_containers() {
-    print_info "Checking for existing A-MEM containers and processes..."
+    print_info "Checking for existing ZetMem containers and processes..."
 
-    # Kill any existing amem-server processes (e.g., started by Claude Desktop)
-    print_status "Stopping any running A-MEM server processes..."
+    # Kill any existing zetmem-server processes (e.g., started by Claude Desktop)
+    print_status "Stopping any running ZetMem server processes..."
 
-    # Kill processes using A-MEM ports
+    # Kill processes using ZetMem ports
     for port in 8080 9092; do
         lsof -ti:$port | xargs kill -9 2>/dev/null || true
     done
 
-    # Also check for any amem-server processes by name
-    pkill -f "amem-server" 2>/dev/null || true
+    # Also check for any zetmem-server processes by name
+    pkill -f "zetmem-server" 2>/dev/null || true
 
     # Give processes a moment to terminate
     sleep 1
@@ -245,7 +245,7 @@ cleanup_existing_containers() {
     fi
 
     # Check for orphaned containers with our naming pattern
-    orphaned_containers=$(docker ps -aq --filter "name=amemcontext_augment" 2>/dev/null || true)
+    orphaned_containers=$(docker ps -aq --filter "name=zetmemcontext_augment" 2>/dev/null || true)
 
     # Determine if any containers were found
     if [ -n "$compose_containers" ] || [ -n "$orphaned_containers" ]; then
@@ -254,7 +254,7 @@ cleanup_existing_containers() {
 
     if [ "$containers_found" = true ]; then
         echo ""
-        print_warning "Found existing A-MEM containers:"
+        print_warning "Found existing ZetMem containers:"
 
         # Show compose containers
         if [ -n "$compose_containers" ]; then
@@ -265,7 +265,7 @@ cleanup_existing_containers() {
         # Show orphaned containers
         if [ -n "$orphaned_containers" ]; then
             echo "Orphaned containers:"
-            docker ps -a --filter "name=amemcontext_augment" --format "table {{.Names}}\t{{.Status}}" 2>/dev/null || true
+            docker ps -a --filter "name=zetmemcontext_augment" --format "table {{.Names}}\t{{.Status}}" 2>/dev/null || true
         fi
 
         echo ""
@@ -306,7 +306,7 @@ cleanup_existing_containers() {
         fi
 
         # Verify cleanup
-        remaining=$(docker ps -aq --filter "name=amemcontext_augment" 2>/dev/null || true)
+        remaining=$(docker ps -aq --filter "name=zetmemcontext_augment" 2>/dev/null || true)
         if [ -z "$remaining" ]; then
             print_status "Container cleanup completed successfully"
         else
@@ -315,15 +315,15 @@ cleanup_existing_containers() {
 
         echo ""
     else
-        print_status "No existing A-MEM containers found"
+        print_status "No existing ZetMem containers found"
     fi
 
-    print_status "A-MEM process and container cleanup completed"
+    print_status "ZetMem process and container cleanup completed"
 }
 
 # Start services
 start_services() {
-    print_info "Starting A-MEM services..."
+    print_info "Starting ZetMem services..."
 
     cd "$PROJECT_ROOT"
 
@@ -342,7 +342,7 @@ start_services() {
     
     if [ ${#conflicts[@]} -ne 0 ]; then
         print_warning "Port conflicts detected: ${conflicts[*]}"
-        echo "These ports are required by A-MEM services."
+        echo "These ports are required by ZetMem services."
         echo "Please stop services using these ports or modify docker-compose.yml"
         echo ""
         read -p "Continue anyway? (y/N): " -n 1 -r
@@ -401,29 +401,29 @@ start_services() {
     fi
 }
 
-# Build A-MEM server
+# Build ZetMem server
 build_server() {
-    print_info "Building A-MEM server..."
-    
+    print_info "Building ZetMem server..."
+
     cd "$PROJECT_ROOT"
-    
+
     # Download dependencies
     go mod tidy
-    
+
     # Build server
-    go build -o amem-server cmd/server/main.go
-    
-    if [ -f "amem-server" ]; then
-        print_status "A-MEM server built successfully"
-        
+    go build -o zetmem-server cmd/server/main.go
+
+    if [ -f "zetmem-server" ]; then
+        print_status "ZetMem server built successfully"
+
         # Make executable
-        chmod +x amem-server
+        chmod +x zetmem-server
         
         # Get absolute path
         ZETMEM_SERVER_PATH="$(pwd)/zetmem-server"
         ZETMEM_CONFIG_PATH="$(pwd)/config/production.yaml"
     else
-        print_error "Failed to build A-MEM server"
+        print_error "Failed to build ZetMem server"
         exit 1
     fi
 }
@@ -539,16 +539,16 @@ test_installation() {
     cd "$PROJECT_ROOT"
     
     # Test server build
-    if [ ! -f "amem-server" ]; then
-        print_error "A-MEM server not found"
+    if [ ! -f "zetmem-server" ]; then
+        print_error "ZetMem server not found"
         return 1
     fi
-    
+
     # Test basic functionality
     print_info "Running basic tests..."
-    
+
     # Test MCP protocol
-    echo '{"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {"protocolVersion": "2024-11-05", "capabilities": {}, "clientInfo": {"name": "test-client", "version": "1.0.0"}}}' | timeout 10 ./amem-server -config config/production.yaml > /dev/null 2>&1
+    echo '{"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {"protocolVersion": "2024-11-05", "capabilities": {}, "clientInfo": {"name": "test-client", "version": "1.0.0"}}}' | timeout 10 ./zetmem-server -config config/production.yaml > /dev/null 2>&1
     
     if [ $? -eq 0 ]; then
         print_status "MCP protocol test passed"
@@ -570,10 +570,10 @@ test_installation() {
 # Main installation function
 main() {
     echo ""
-    echo "🚀 A-MEM MCP Server Installation"
-    echo "================================="
+    echo "🚀 ZetMem MCP Server Installation"
+    echo "=================================="
     echo ""
-    echo "This script will install and configure A-MEM for use with Claude."
+    echo "This script will install and configure ZetMem for use with Claude."
     echo ""
     
     # Initialize log
@@ -622,7 +622,7 @@ main() {
     echo "🎉 Installation Complete!"
     echo "========================"
     echo ""
-    print_status "A-MEM MCP Server has been successfully installed and configured"
+    print_status "ZetMem MCP Server has been successfully installed and configured"
     echo ""
     echo "Next steps:"
     echo "1. Restart Claude Code (VS Code) or Claude Desktop"

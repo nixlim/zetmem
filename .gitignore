@@ -112,7 +112,7 @@ Thumbs.db
 
 # Project specific
 .swarm/
-amem-memories/
+zetmem-memories/
 chromadb/
 redis-data/
 postgres-data/
@@ -144,6 +144,6 @@ claude-flow
 claude-flow.bat
 claude-flow.ps1
 hive-mind-prompt-*.txt
-/amem-server
+/zetmem-server
 /documentation_workflow.json
 /.claude/

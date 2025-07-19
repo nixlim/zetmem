@@ -86,18 +86,18 @@ FROM alpine:latest
 RUN apk --no-cache add ca-certificates tzdata
 
 # Security: Create non-root user
-RUN addgroup -g 1001 -S amem && \
-    adduser -u 1001 -S amem -G amem
+RUN addgroup -g 1001 -S zetmem && \
+    adduser -u 1001 -S zetmem -G zetmem
 
 WORKDIR /app
 
 # Copy artifacts with proper ownership
 COPY --from=builder /app/zetmem-server .
-COPY --chown=amem:amem config/ ./config/
-COPY --chown=amem:amem prompts/ ./prompts/
+COPY --chown=zetmem:zetmem config/ ./config/
+COPY --chown=zetmem:zetmem prompts/ ./prompts/
 
 # Security: Run as non-root
-USER amem
+USER zetmem
 
 EXPOSE 8080
 
@@ -112,10 +112,10 @@ CMD ["./zetmem-server", "-config", "./config/docker.yaml"]
 
 ### Service Definitions
 
-#### 1. A-MEM Server
+#### 1. ZetMem Server
 
 ```yaml
-amem-server:
+zetmem-server:
   build: .
   ports:
     - "8080:8080"    # API port
@@ -213,7 +213,7 @@ volumes:
 docker compose build
 
 # Build specific service
-docker compose build amem-server
+docker compose build zetmem-server
 
 # Build with no cache
 docker compose build --no-cache
@@ -226,10 +226,10 @@ docker compose build --no-cache
 docker compose up -d
 
 # Start specific services
-docker compose up -d amem-server chromadb redis
+docker compose up -d zetmem-server chromadb redis
 
 # View logs
-docker compose logs -f amem-server
+docker compose logs -f zetmem-server
 
 # Stop services
 docker compose down
@@ -389,13 +389,13 @@ services:
    docker network ls
    
    # Inspect network
-   docker network inspect amem-network
+   docker network inspect zetmem-network
    ```
 
 4. **Volume Permissions**
    ```bash
    # Fix ownership
-   docker compose exec amem-server chown -R amem:amem /app/data
+   docker compose exec zetmem-server chown -R zetmem:zetmem /app/data
    ```
 
 ### Health Checks
@@ -407,7 +407,7 @@ Monitor service health:
 docker compose ps
 
 # Check specific service health
-docker inspect amem-server | jq '.[0].State.Health'
+docker inspect zetmem-server | jq '.[0].State.Health'
 
 # Manual health check
 curl http://localhost:8080/health
@@ -419,7 +419,7 @@ curl http://localhost:8080/health
 
 ```yaml
 networks:
-  amem-network:
+  zetmem-network:
     driver: bridge
     ipam:
       config:
@@ -430,11 +430,11 @@ networks:
 
 ```yaml
 services:
-  amem-server:
+  zetmem-server:
     external_links:
       - external-redis:redis
     networks:
-      - amem-network
+      - zetmem-network
       - external-network
 ```
 

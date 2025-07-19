@@ -14,7 +14,7 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
-// PromptManager manages prompt templates
+// PromptManager manages prompt templates //TODO: Consider wiring this in
 type PromptManager struct {
 	config    config.PromptsConfig
 	logger    *zap.Logger

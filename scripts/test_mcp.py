@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Simple test script for A-MEM MCP Server
+Simple test script for ZetMem MCP Server
 Tests the JSON-RPC interface by sending sample requests
 """
 
@@ -14,7 +14,7 @@ def send_mcp_request(request):
     try:
         # Start the server process
         process = subprocess.Popen(
-            ['./amem-server', '-config', 'config/development.yaml'],
+            ['./zetmem-server', '-config', 'config/development.yaml'],
             stdin=subprocess.PIPE,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
@@ -157,15 +157,15 @@ def test_evolve_network():
 
 def main():
     """Run all tests"""
-    print("A-MEM MCP Server Test Suite")
+    print("ZetMem MCP Server Test Suite")
     print("=" * 40)
-    
+
     # Check if server binary exists
     try:
-        subprocess.run(['./amem-server', '--help'], 
+        subprocess.run(['./zetmem-server', '--help'],
                       capture_output=True, check=False)
     except FileNotFoundError:
-        print("Error: amem-server binary not found. Please run 'make build' first.")
+        print("Error: zetmem-server binary not found. Please run 'make build' first.")
         sys.exit(1)
     
     tests = [

@@ -2,7 +2,7 @@
 
 ## Overview
 
-The A-MEM MCP Server uses a hierarchical configuration system that supports multiple environments, hot reloading, and both YAML and environment variable configuration methods.
+The ZetMem MCP Server uses a hierarchical configuration system that supports multiple environments, hot reloading, and both YAML and environment variable configuration methods.
 
 ## Configuration Hierarchy
 
@@ -39,7 +39,7 @@ server:
 
 chromadb:
   url: "http://chromadb:8000"
-  collection: "amem_memories"
+  collection: "zetmem_memories"
   batch_size: 100
 
 litellm:
