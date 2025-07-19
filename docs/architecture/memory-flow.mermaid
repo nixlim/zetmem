@@ -1,0 +1,32 @@
+sequenceDiagram
+    participant Client
+    participant MCP as MCP Server
+    participant Memory as Memory System
+    participant LLM as LiteLLM
+    participant Embed as Embedding Service
+    participant Chroma as ChromaDB
+    
+    Client->>MCP: store_coding_memory(code, description)
+    MCP->>Memory: CreateMemory(content)
+    
+    Memory->>LLM: AnalyzeCode(content)
+    LLM-->>Memory: keywords, tags, summary
+    
+    Memory->>Embed: GenerateEmbedding(content)
+    Embed-->>Memory: vector[1536]
+    
+    Memory->>Chroma: Add(memory, embedding, metadata)
+    Chroma-->>Memory: memory_id
+    
+    Memory-->>MCP: MemoryResponse
+    MCP-->>Client: {id, keywords, tags, summary}
+    
+    Note over Memory,Chroma: Async Evolution Process
+    
+    loop Every interval
+        Memory->>Memory: SelectBatchForEvolution()
+        Memory->>LLM: FindPatterns(memories)
+        LLM-->>Memory: relationships
+        Memory->>Memory: UpdateLinks()
+        Memory->>Chroma: UpdateMetadata()
+    end

@@ -1,0 +1,22 @@
+{
+  "claude.mcpServers": {
+    "amem-augmented": {
+      "command": "/path/to/amem-server/amem-server",
+      "args": ["-config", "/path/to/amem-server/config/production.yaml"],
+      "env": {
+        "OPENAI_API_KEY": "${OPENAI_API_KEY}",
+        "AMEM_ENV": "production",
+        "AMEM_LOG_LEVEL": "info"
+      },
+      "description": "A-MEM (Agentic Memory) - AI-powered memory system for persistent coding context"
+    }
+  },
+  "claude.mcpSettings": {
+    "amem-augmented": {
+      "enabled": true,
+      "autoStart": true,
+      "timeout": 30000,
+      "retries": 3
+    }
+  }
+}

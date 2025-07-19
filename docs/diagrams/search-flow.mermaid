@@ -1,0 +1,55 @@
+%%{init: {'theme':'dark', 'themeVariables': { 'primaryColor':'#1f2937', 'primaryTextColor':'#fff', 'primaryBorderColor':'#374151', 'lineColor':'#6b7280', 'secondaryColor':'#374151', 'tertiaryColor':'#1f2937'}}}%%
+
+sequenceDiagram
+    participant Client
+    participant EmbeddingService
+    participant ChromaDBService
+    participant ChromaDB as ChromaDB Server
+    participant WorkspaceService
+    
+    Note over Client,ChromaDB: Memory Search Flow
+    
+    Client->>Client: Prepare search query
+    Note right of Client: Query text + filters
+    
+    Client->>EmbeddingService: GenerateEmbedding(query_text)
+    EmbeddingService->>EmbeddingService: Select embedding provider
+    
+    alt Using configured provider
+        EmbeddingService->>EmbeddingService: Call provider API
+    else Fallback mode
+        EmbeddingService->>EmbeddingService: Generate hash embedding
+    end
+    
+    EmbeddingService-->>Client: Return query embedding vector
+    
+    Client->>WorkspaceService: GetWorkspaceID()
+    WorkspaceService-->>Client: Return active workspace
+    
+    Client->>Client: Build search filters
+    Note right of Client: workspace_id, code_type,<br/>custom metadata filters
+    
+    Client->>ChromaDBService: SearchSimilar(embedding, limit, filters)
+    ChromaDBService->>ChromaDBService: Get collection UUID
+    
+    ChromaDBService->>ChromaDBService: Prepare query request
+    Note right of ChromaDBService: QueryRequest with<br/>embedding & filters
+    
+    ChromaDBService->>ChromaDB: POST /collections/{id}/query
+    Note over ChromaDB: Vector similarity search<br/>with metadata filtering
+    
+    ChromaDB-->>ChromaDBService: Return results
+    Note left of ChromaDB: IDs, distances,<br/>documents, metadata
+    
+    ChromaDBService->>ChromaDBService: Parse response
+    loop For each result
+        ChromaDBService->>ChromaDBService: Reconstruct Memory object
+        Note right of ChromaDBService: Extract metadata,<br/>parse timestamps,<br/>rebuild arrays
+    end
+    
+    ChromaDBService-->>Client: Return memories & distances
+    
+    Client->>Client: Process results
+    Note right of Client: Rank by similarity,<br/>apply business logic,<br/>format response
+    
+    Note over Client,ChromaDB: Search completed!

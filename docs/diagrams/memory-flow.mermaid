@@ -1,0 +1,73 @@
+%%{init: {'theme':'dark', 'themeVariables': { 'primaryColor':'#1f2937', 'primaryTextColor':'#fff', 'primaryBorderColor':'#374151', 'lineColor':'#6b7280', 'secondaryColor':'#374151', 'tertiaryColor':'#1f2937'}}}%%
+
+sequenceDiagram
+    participant Client
+    participant WorkspaceService
+    participant PromptManager
+    participant LiteLLMService
+    participant EmbeddingService
+    participant ChromaDBService
+    participant ExternalAPIs as External APIs
+    
+    Note over Client,ExternalAPIs: Memory Creation Flow
+    
+    Client->>WorkspaceService: InitializeWorkspace(identifier)
+    WorkspaceService->>WorkspaceService: Validate & Normalize ID
+    WorkspaceService->>ChromaDBService: Check workspace exists
+    ChromaDBService->>ChromaDBService: Query by workspace_id
+    ChromaDBService-->>WorkspaceService: Return existence status
+    WorkspaceService-->>Client: Return workspace info
+    
+    Client->>PromptManager: LoadPrompt("extract_memory")
+    PromptManager->>PromptManager: Check cache
+    PromptManager->>PromptManager: Load from YAML if needed
+    PromptManager-->>Client: Return PromptTemplate
+    
+    Client->>PromptManager: RenderPrompt(template, data)
+    PromptManager->>PromptManager: Compile template
+    PromptManager->>PromptManager: Inject variables
+    PromptManager-->>Client: Return rendered prompt
+    
+    Client->>LiteLLMService: CallWithRetry(prompt, retryOnJSON)
+    loop Retry Logic
+        LiteLLMService->>ExternalAPIs: POST /chat/completions
+        ExternalAPIs-->>LiteLLMService: Response or Error
+        alt Success
+            LiteLLMService->>LiteLLMService: Validate JSON if required
+        else Failure
+            LiteLLMService->>LiteLLMService: Exponential backoff
+        end
+    end
+    
+    alt All retries failed
+        loop Fallback Models
+            LiteLLMService->>ExternalAPIs: Try fallback model
+            ExternalAPIs-->>LiteLLMService: Response or Error
+        end
+    end
+    
+    LiteLLMService-->>Client: Return analysis result
+    
+    Client->>EmbeddingService: GenerateEmbedding(content)
+    alt OpenAI Provider
+        EmbeddingService->>ExternalAPIs: POST /embeddings
+        ExternalAPIs-->>EmbeddingService: Return embedding vector
+    else Sentence Transformers
+        EmbeddingService->>ExternalAPIs: POST /embeddings (local)
+        ExternalAPIs-->>EmbeddingService: Return embedding vector
+    else Fallback
+        EmbeddingService->>EmbeddingService: Generate hash-based embedding
+    end
+    EmbeddingService-->>Client: Return embedding vector
+    
+    Client->>Client: Create Memory object
+    Note right of Client: Combine content, analysis,<br/>embedding, metadata
+    
+    Client->>ChromaDBService: StoreMemory(memory)
+    ChromaDBService->>ChromaDBService: Get collection UUID
+    ChromaDBService->>ChromaDBService: Prepare metadata
+    ChromaDBService->>ExternalAPIs: POST /collections/{id}/add
+    ExternalAPIs-->>ChromaDBService: Storage confirmation
+    ChromaDBService-->>Client: Return success
+    
+    Note over Client,ExternalAPIs: Memory stored successfully!

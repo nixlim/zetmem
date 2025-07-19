@@ -1,0 +1,54 @@
+graph TB
+    subgraph "Client Layer"
+        CLIENT[Claude/AI Client]
+    end
+    
+    subgraph "MCP Server"
+        MCP[MCP JSON-RPC Server<br/>:3000]
+        TOOLS[MCP Tools<br/>- store_coding_memory<br/>- retrieve_relevant_memories<br/>- evolve_memory_network<br/>- workspace_*]
+    end
+    
+    subgraph "Core Services"
+        MEM[Memory System]
+        WS[Workspace Service]
+        PM[Prompt Manager]
+        SCHED[Scheduler]
+    end
+    
+    subgraph "AI Services"
+        LLM[LiteLLM Service<br/>GPT-4/Claude]
+        EMB[Embedding Service<br/>OpenAI/Sentence-Transformers]
+    end
+    
+    subgraph "Data Layer"
+        CHROMA[ChromaDB<br/>:8001]
+        REDIS[Redis Cache<br/>:6379]
+        RABBIT[RabbitMQ<br/>:5672]
+    end
+    
+    subgraph "Monitoring"
+        PROM[Prometheus<br/>:9090]
+        METRICS[Metrics Exporter]
+    end
+    
+    CLIENT -->|stdio| MCP
+    MCP --> TOOLS
+    TOOLS --> MEM
+    TOOLS --> WS
+    
+    MEM --> LLM
+    MEM --> EMB
+    MEM --> CHROMA
+    MEM --> PM
+    
+    WS --> CHROMA
+    
+    SCHED -->|Evolution Tasks| MEM
+    SCHED --> RABBIT
+    
+    MCP --> METRICS
+    METRICS --> PROM
+    
+    style MCP fill:#f9f,stroke:#333,stroke-width:4px
+    style MEM fill:#bbf,stroke:#333,stroke-width:2px
+    style CHROMA fill:#bfb,stroke:#333,stroke-width:2px

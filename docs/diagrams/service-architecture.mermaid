@@ -1,0 +1,60 @@
+%%{init: {'theme':'dark', 'themeVariables': { 'primaryColor':'#1f2937', 'primaryTextColor':'#fff', 'primaryBorderColor':'#374151', 'lineColor':'#6b7280', 'secondaryColor':'#374151', 'tertiaryColor':'#1f2937'}}}%%
+
+graph TB
+    subgraph "Client Layer"
+        CLI[CLI Handler]
+        MCP[MCP Server]
+        API[REST API]
+    end
+    
+    subgraph "Service Layer"
+        WS[WorkspaceService]
+        PM[PromptManager]
+        LLM[LiteLLMService]
+        ES[EmbeddingService]
+        CDB[ChromaDBService]
+    end
+    
+    subgraph "External Services"
+        OPENAI[OpenAI API]
+        STRANS[Sentence Transformers]
+        CHROMA[ChromaDB Server]
+    end
+    
+    subgraph "Data Models"
+        MEM[Memory Model]
+        WORK[Workspace Model]
+        PROMPT[Prompt Template]
+    end
+    
+    %% Client to Service connections
+    CLI --> WS
+    CLI --> PM
+    MCP --> WS
+    MCP --> CDB
+    API --> ES
+    API --> CDB
+    
+    %% Service interactions
+    WS --> CDB
+    PM --> LLM
+    LLM --> OPENAI
+    ES --> OPENAI
+    ES --> STRANS
+    CDB --> CHROMA
+    
+    %% Data flow
+    MEM -.-> CDB
+    WORK -.-> WS
+    PROMPT -.-> PM
+    
+    %% Styling
+    classDef service fill:#374151,stroke:#6b7280,stroke-width:2px,color:#fff
+    classDef external fill:#1f2937,stroke:#6b7280,stroke-width:2px,color:#fff
+    classDef model fill:#4b5563,stroke:#6b7280,stroke-width:2px,color:#fff
+    classDef client fill:#1f2937,stroke:#10b981,stroke-width:2px,color:#fff
+    
+    class WS,PM,LLM,ES,CDB service
+    class OPENAI,STRANS,CHROMA external
+    class MEM,WORK,PROMPT model
+    class CLI,MCP,API client

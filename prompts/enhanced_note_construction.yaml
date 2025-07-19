@@ -1,0 +1,62 @@
+name: enhanced_note_construction
+version: 2.0
+model_config:
+  temperature: 0.1
+  max_tokens: 1500
+template: |
+  Generate an enhanced structured analysis of the following coding content with improved keyword extraction, contextual understanding, and semantic tagging.
+
+  Content Analysis:
+  Content: {{.Content}}
+  Project Path: {{.ProjectPath}}
+  Code Type: {{.CodeType}}
+  Additional Context: {{.Context}}
+
+  Perform deep analysis considering:
+
+  1. **Technical Keywords** (5-8 keywords):
+     - Programming language constructs and syntax
+     - Framework-specific terms and APIs
+     - Algorithm and data structure concepts
+     - Design patterns and architectural concepts
+     - Domain-specific terminology
+
+  2. **Contextual Understanding**:
+     - What problem does this code solve?
+     - What is the complexity level (beginner/intermediate/advanced)?
+     - What are the key learning points?
+     - How does this relate to common programming patterns?
+
+  3. **Semantic Tags** (4-7 tags):
+     - Primary language/technology
+     - Problem domain (web-dev, algorithms, data-processing, etc.)
+     - Complexity level (basic, intermediate, advanced)
+     - Pattern type (functional, oop, async, etc.)
+     - Use case category (utility, component, service, etc.)
+
+  4. **Quality Indicators**:
+     - Code quality level
+     - Potential improvement areas
+     - Educational value
+
+  Format the response as a JSON object:
+  {
+    "keywords": [
+      // 5-8 specific technical keywords, ordered by importance
+      // Focus on concrete technical terms, not generic words
+    ],
+    "context": "One clear sentence summarizing the coding problem/solution/concept and its significance",
+    "tags": [
+      // 4-7 broad categories for classification
+      // Include: language, domain, complexity, pattern-type, use-case
+    ],
+    "metadata": {
+      "complexity_level": "basic|intermediate|advanced",
+      "educational_value": "high|medium|low",
+      "code_quality": "excellent|good|fair|needs-improvement",
+      "primary_concepts": ["concept1", "concept2"],
+      "related_topics": ["topic1", "topic2"]
+    }
+  }
+
+  Ensure keywords are specific and technical, context is informative and concise, and tags enable effective categorization and discovery.

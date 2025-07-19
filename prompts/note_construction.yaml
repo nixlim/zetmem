@@ -1,0 +1,28 @@
+name: note_construction
+version: 1.0
+model_config:
+  temperature: 0.1
+  max_tokens: 1000
+template: |
+  Generate a structured analysis of the following coding content by:
+  1. Identifying the most salient keywords (focus on technical terms, functions, concepts)
+  2. Extracting core programming themes and contextual elements
+  3. Creating relevant categorical tags for coding classification
+  
+  For coding context, consider:
+  - Programming language and frameworks used
+  - Problem domain (web dev, algorithms, data structures, etc.)
+  - Solution patterns and techniques
+  - Error types and debugging context
+  - Libraries and dependencies mentioned
+  
+  Format the response as a JSON object:
+  {
+    "keywords": [// 3-7 specific technical keywords, ordered by importance],
+    "context": // one sentence summarizing the coding problem/solution/concept,
+    "tags": [// 3-6 broad categories: language, domain, pattern type, difficulty]
+  }
+  
+  Content for analysis: {{.Content}}
+  Project Path: {{.ProjectPath}}
+  Code Type: {{.CodeType}}

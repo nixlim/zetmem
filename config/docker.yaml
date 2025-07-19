@@ -1,0 +1,40 @@
+server:
+  port: 8080
+  log_level: info
+  max_request_size: 10MB
+
+chromadb:
+  url: "http://chromadb:8000"
+  collection: "amem_memories"
+  batch_size: 100
+
+litellm:
+  default_model: "gpt-4-turbo-preview"
+  fallback_models:
+    - "gpt-3.5-turbo"
+    - "gpt-4"
+  max_retries: 3
+  timeout: 30s
+  rate_limit: 60  # per minute
+
+embedding:
+  service: "sentence-transformers"
+  model: "all-MiniLM-L6-v2"
+  batch_size: 32
+  url: "http://sentence-transformers:8000"
+
+evolution:
+  enabled: true
+  schedule: "0 2 * * *"  # 2 AM daily
+  batch_size: 50
+  worker_count: 3
+
+prompts:
+  directory: "/app/prompts"
+  cache_enabled: true
+  hot_reload: false
+
+monitoring:
+  metrics_port: 9092
+  enable_tracing: true
+  sample_rate: 0.1

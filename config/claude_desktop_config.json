@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "amem-augmented": {
+      "command": "/path/to/amem-server/amem-server",
+      "args": ["-config", "/path/to/amem-server/config/production.yaml"],
+      "env": {
+        "OPENAI_API_KEY": "${OPENAI_API_KEY}",
+        "AMEM_ENV": "production",
+        "AMEM_LOG_LEVEL": "info"
+      }
+    }
+  }
+}

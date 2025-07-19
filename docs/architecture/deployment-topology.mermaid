@@ -1,0 +1,48 @@
+graph TB
+    subgraph "Docker Network: amem-network"
+        subgraph "Application Tier"
+            APP[amem-server<br/>Port: 3000<br/>Go Application]
+        end
+        
+        subgraph "Data Tier"
+            CHROMA[chromadb<br/>Port: 8001<br/>Vector Database]
+            REDIS[redis<br/>Port: 6379<br/>Cache Layer]
+            RABBIT[rabbitmq<br/>Port: 5672/15672<br/>Message Queue]
+        end
+        
+        subgraph "AI Tier"
+            SENT[sentence-transformers<br/>Port: 8002<br/>Embedding Service]
+        end
+        
+        subgraph "Monitoring Tier"
+            PROM[prometheus<br/>Port: 9090<br/>Metrics Collection]
+        end
+    end
+    
+    subgraph "Host System"
+        VOL1[Docker Volume<br/>chroma-data]
+        VOL2[Docker Volume<br/>redis-data]
+        VOL3[Docker Volume<br/>rabbitmq-data]
+        VOL4[Docker Volume<br/>prometheus-data]
+        
+        CONFIG[./config/]
+        PROMCFG[./monitoring/]
+    end
+    
+    APP -.-> CHROMA
+    APP -.-> REDIS
+    APP -.-> RABBIT
+    APP -.-> SENT
+    APP -.-> PROM
+    
+    CHROMA --> VOL1
+    REDIS --> VOL2
+    RABBIT --> VOL3
+    PROM --> VOL4
+    
+    APP --> CONFIG
+    PROM --> PROMCFG
+    
+    style APP fill:#f96,stroke:#333,stroke-width:2px
+    style CHROMA fill:#9f9,stroke:#333,stroke-width:2px
+    style REDIS fill:#f99,stroke:#333,stroke-width:2px

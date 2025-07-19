@@ -1,0 +1,62 @@
+%%{init: {'theme':'dark', 'themeVariables': { 'primaryColor':'#1f2937', 'primaryTextColor':'#fff', 'primaryBorderColor':'#374151', 'lineColor':'#6b7280', 'secondaryColor':'#374151', 'tertiaryColor':'#1f2937'}}}%%
+
+graph TD
+    subgraph "External Dependencies"
+        OPENAI[OpenAI API<br/>- GPT Models<br/>- Embeddings]
+        SENT[Sentence Transformers<br/>- Local Models<br/>- Privacy-first]
+        CHROMADB[ChromaDB Server<br/>- Vector Storage<br/>- Similarity Search]
+    end
+    
+    subgraph "Core Services"
+        LLM[LiteLLMService<br/>- LLM Integration<br/>- Retry Logic<br/>- Fallback Models]
+        ES[EmbeddingService<br/>- Text Vectors<br/>- Multi-provider<br/>- Batch Processing]
+        CDB[ChromaDBService<br/>- Vector DB<br/>- Memory Storage<br/>- Semantic Search]
+        PM[PromptManager<br/>- Templates<br/>- Hot Reload<br/>- Caching]
+        WS[WorkspaceService<br/>- Isolation<br/>- Organization<br/>- Validation]
+    end
+    
+    subgraph "Configuration"
+        ENV[Environment Variables<br/>- API Keys<br/>- Service URLs<br/>- Timeouts]
+        YAML[YAML Files<br/>- Prompt Templates<br/>- Model Configs<br/>- Service Settings]
+    end
+    
+    %% External to Service dependencies
+    OPENAI -.->|API calls| LLM
+    OPENAI -.->|Embeddings API| ES
+    SENT -.->|Local API| ES
+    CHROMADB -.->|HTTP API| CDB
+    
+    %% Configuration dependencies
+    ENV -->|API Keys| LLM
+    ENV -->|Service URLs| ES
+    ENV -->|DB Config| CDB
+    YAML -->|Templates| PM
+    
+    %% Inter-service dependencies
+    WS -->|Requires| CDB
+    PM -->|Used by| LLM
+    
+    %% Data flow indicators
+    LLM -.->|Analysis| CDB
+    ES -.->|Embeddings| CDB
+    WS -.->|Filters| CDB
+    
+    %% Styling
+    classDef external fill:#1f2937,stroke:#6b7280,stroke-width:2px,color:#fff
+    classDef service fill:#374151,stroke:#6b7280,stroke-width:2px,color:#fff
+    classDef config fill:#4b5563,stroke:#6b7280,stroke-width:2px,color:#fff
+    
+    class OPENAI,SENT,CHROMADB external
+    class LLM,ES,CDB,PM,WS service
+    class ENV,YAML config
+    
+    %% Legend
+    subgraph "Legend"
+        L1[Direct Dependency]
+        L2[Data Flow]
+    end
+    
+    L1 -->|Solid Arrow| L2
+    L1 -.->|Dashed Arrow| L2
+    
+    style Legend fill:none,stroke:#374151,stroke-width:1px

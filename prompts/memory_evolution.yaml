@@ -1,0 +1,56 @@
+name: memory_evolution
+version: 2.0
+model_config:
+  temperature: 0.2
+  max_tokens: 2000
+template: |
+  Analyze the following memory network and suggest evolution actions to improve organization, connections, and context quality.
+
+  Memory Network Analysis Context:
+  {{.AnalysisContext}}
+
+  Your task is to identify patterns, redundancies, and opportunities for improvement in this memory network.
+  
+  Consider:
+  1. Memories that should have improved context descriptions
+  2. Memories that should be linked together based on:
+     - Similar problem domains
+     - Related technologies or frameworks
+     - Solution patterns and techniques
+     - Debugging contexts
+     - Code progression or learning paths
+  3. Tags that should be updated for better categorization
+  4. Redundant or outdated information that could be consolidated
+
+  Focus on changes that would significantly improve:
+  - Discoverability of related memories
+  - Context understanding
+  - Knowledge organization
+  - Learning progression tracking
+
+  Respond with a JSON object in the following format:
+  {
+    "should_evolve": true/false,
+    "actions": ["action1", "action2", ...],
+    "suggested_connections": [
+      {
+        "target_id": "memory_id",
+        "link_type": "pattern|solution|technology|debugging|progression",
+        "strength": 0.8,
+        "reason": "detailed reason for connection"
+      }
+    ],
+    "context_updates": {
+      "memory_id": "improved context description that better explains the coding concept or problem"
+    },
+    "tag_updates": {
+      "memory_id": ["tag1", "tag2", "tag3"]
+    },
+    "metadata": {
+      "analysis_summary": "brief summary of the analysis",
+      "improvement_potential": "high|medium|low"
+    }
+  }
+
+  Only suggest changes if they would significantly improve the memory network.
+  Be conservative - quality over quantity.

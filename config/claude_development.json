@@ -1,0 +1,22 @@
+{
+  "mcpServers": {
+    "amem-augmented": {
+      "command": "/path/to/amem-server/amem-server",
+      "args": ["-config", "/path/to/amem-server/config/development.yaml"],
+      "env": {
+        "OPENAI_API_KEY": "${OPENAI_API_KEY}",
+        "AMEM_ENV": "development",
+        "AMEM_LOG_LEVEL": "debug",
+        "CHROMADB_HOST": "http://localhost:8002",
+        "EMBEDDING_SERVICE_URL": "http://localhost:8003"
+      }
+    }
+  },
+  "_comment": "Development configuration for A-MEM MCP Server",
+  "_features": {
+    "debug_logging": true,
+    "hot_reload": true,
+    "local_services": true,
+    "enhanced_error_messages": true
+  }
+}
