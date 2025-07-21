@@ -30,13 +30,50 @@ An AI-powered memory system for Claude Code/Claude Desktop that enables persiste
 
 ## Quick Start
 
-### 🚀 One-Command Installation
+### 🚀 Spin up Docker services
 
 ```bash
 git clone git@github.com:nixlim/zetmem.git
 cd zetmem
 ./scripts/install.sh
 ```
+
+###  Edit Claude Desktop/Claude Code Configuration
+
+```json
+{
+    "mcpServers": {
+        "zetmem": {
+            "command": "/absolute/path/to/zetmem/zetmem-server",
+            "args": ["-config", "/absolute/path/to/zetmem/config/production.yaml"],
+            "env": {
+                "OPENAI_API_KEY": "${OPENAI_API_KEY- <your OPENAI_API_KEY>}"
+            }
+        }
+    }
+}
+
+```
+
+### List of Tools
+
+ZetMem provides the following MCP tools for memory management and AI-assisted development:
+
+#### Core Memory Tools
+- **`store_coding_memory`** - Store code snippets, solutions, and development insights with AI-generated analysis
+- **`retrieve_relevant_memories`** - Search and retrieve stored memories using vector similarity search
+- **`evolve_memory_network`** - Trigger memory network evolution to identify patterns and optimize connections
+
+#### Workspace Management
+- **`workspace_init`** - Initialize or retrieve workspace for organizing memories by project
+- **`workspace_create`** - Create new workspace with specified configuration
+- **`workspace_retrieve`** - Get detailed workspace information and memory statistics
+
+#### Agent Onboarding
+- **`perform_onboarding`** - Comprehensive agent onboarding that initializes workspace and provides complete tool use strategy and best practices
+
+Each tool includes comprehensive error handling, input validation, and detailed response formatting to ensure reliable operation in AI-assisted development workflows.
+
 
 ### 📚 Documentation
 
